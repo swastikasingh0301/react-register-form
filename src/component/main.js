@@ -26,13 +26,14 @@ class Main extends Component{
 
     componentWillUpdate(nextProps, nextState) {
         var emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        nextState.invalidData = !(nextState.email.match(emailRegEx) && nextState.password.length > 5 && nextState.confirmPassword == nextState.password && nextState.userName.length>1 && nextState.firstName.length>1 && nextState.lastName.length>1 );
+        var nameRegEx = /^[A-z]+$/;
+        nextState.invalidData = !(nextState.email.match(emailRegEx) && nextState.password.length > 5 && nextState.confirmPassword == nextState.password && nextState.userName.match(nameRegEx) && nextState.firstName.match(nameRegEx) && nextState.lastName.match(nameRegEx) );
     }
 
     validateField(fieldName,value){
         var emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var pass1 = /[0-9]/;
-        var pass2 =  /[a-z]/;
+        var nameRegEx = /^[A-z]+$/;
         var errMsg = '';
         var passValue = '';
         const error = document.getElementById(`${fieldName}Error`);
@@ -70,7 +71,7 @@ class Main extends Component{
 
         }
         else if (fieldName == 'userName'){
-            if(value.length <=  1){
+            if(!value.match(nameRegEx)){
                 error.textContent = `Username is invalid`;
                 document.getElementById('userName').style.borderColor = "red";
             }
@@ -80,7 +81,7 @@ class Main extends Component{
             }
         }
         else if (fieldName == 'firstName'){
-            if(value.length <= 1){
+            if(!value.match(nameRegEx)){
                 error.textContent = `First name is invalid`;
                 document.getElementById('firstName').style.borderColor = "red";
             }
@@ -90,7 +91,7 @@ class Main extends Component{
             }
         }
         else if ( fieldName == 'lastName'){
-            if(value.length <= 1){
+            if(!value.match(nameRegEx)){
                 error.textContent = `Last Name is invalid`;
                 document.getElementById('lastName').style.borderColor = "red";
             }
