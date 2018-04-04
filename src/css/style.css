@@ -54,6 +54,12 @@
 }
 
 .errorMsg{
-    
+    display:block;
     background-color:red;
+}
+.invalidStyle{
+    border-color: red;
+}
+.validStyle{
+    border-color: lightblue;
 }

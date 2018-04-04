@@ -10,9 +10,24 @@ class Main extends Component{
             email: '',
             password: '',
             confirmPassword: '',
+            errors: {
+                emailErrMsg: " ",
+                passwordErrMsg: "",
+                userNameErrMsg: "",
+                firstNameErrMsg: "",
+                lastNameErrMsg: "",
+                confirmPasswordErrMsg: ""
+            },
+            errClass :{
+                emailClassStyle : "",
+                passwordClassStyle : "",
+                confirmClassStyle : "",
+                firstNameClassStyle : "",
+                lastNameClassStyle : "",
+                userNameClassStyle : ""
+            },
             invalidData: true
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,7 +35,7 @@ class Main extends Component{
     handleChange(event) {
         var name = event.target.name;
         var value = event.target.value;
-        this.setState({ [event.target.name]: event.target.value},
+        this.setState({ [name]: value},
             () => { this.validateField(name, value) });
     }
 
@@ -34,72 +49,96 @@ class Main extends Component{
         var emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var pass1 = /[0-9]/;
         var nameRegEx = /^[A-z]+$/;
-        var errMsg = '';
-        var passValue = '';
-        const error = document.getElementById(`${fieldName}Error`);
+        let emailMsg = this.state.errors.emailErrMsg;
+        let passwordMsg = this.state.errors.passwordErrMsg;
+        let userNameMsg = this.state.errors.userNameErrMsg;
+        let firstNameMsg = this.state.errors.firstNameErrMsg;
+        let lastNameMsg = this.state.errors.lastNameErrMsg;
+        let confirmPasswordMsg = this.state.errors.confirmPasswordErrMsg;
+        let emailClassStyle = this.state.errClass.emailClassStyle;
+        let passwordClassStyle = this.state.errClass.passwordClassStyle;
+        let confirmClassStyle = this.state.errClass.confirmClassStyle;
+        let userNameClassStyle = this.state.errClass.userNameClassStyle;
+        let lastNameClassStyle = this.state.errClass.lastNameClassStyle;
+        let firstNameClassStyle = this.state.errClass.firstNameClassStyle;
 
         if(fieldName == 'email'){
             if(!value.match(emailRegEx)){
-                error.textContent = `Email is invalid`;
-                document.getElementById('email').style.borderColor = "red";
+                emailMsg = 'Email is invalid';
+                emailClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('email').style.borderColor = "lightblue";
+                emailMsg = ' ';
+                emailClassStyle = "validStyle";
             }
         }
         else if (fieldName == 'password'){
-            passValue = value;
             if(value.length < 6){
-                error.textContent = `Password must contain 6 characters`;
-                document.getElementById('password').style.borderColor = "red";
+                passwordMsg = `Password must contain 6 characters`;
+                passwordClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('password').style.borderColor = "lightblue";
+                passwordMsg = '';
+                passwordClassStyle = "validStyle";
             }
         }
         else if (fieldName == 'confirmPassword'){
             if(value !== this.refs.password.value){
-                error.textContent = `Confirm password and Password do not match`;
-                document.getElementById('confirmPassword').style.borderColor = "red";
+                confirmPasswordMsg = `Confirm password and Password do not match`;
+                confirmClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('confirmPassword').style.borderColor = "lightblue";
+                confirmPasswordMsg = '';
+                confirmClassStyle = "validStyle";
             }
-
         }
         else if (fieldName == 'userName'){
             if(!value.match(nameRegEx)){
-                error.textContent = `Username is invalid`;
-                document.getElementById('userName').style.borderColor = "red";
+                userNameMsg = `Username is invalid`;
+                userNameClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('userName').style.borderColor = "lightblue";
+                userNameMsg = '';
+                userNameClassStyle = "validStyle";
             }
         }
         else if (fieldName == 'firstName'){
             if(!value.match(nameRegEx)){
-                error.textContent = `First name is invalid`;
-                document.getElementById('firstName').style.borderColor = "red";
+                firstNameMsg = `First name is invalid`;
+                firstNameClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('firstName').style.borderColor = "lightblue";
+                firstNameMsg = '';
+                firstNameClassStyle = "validStyle";
             }
         }
         else if ( fieldName == 'lastName'){
             if(!value.match(nameRegEx)){
-                error.textContent = `Last Name is invalid`;
-                document.getElementById('lastName').style.borderColor = "red";
+                lastNameMsg = `Last Name is invalid`;
+                lastNameClassStyle = "invalidStyle";
             }
             else{
-                error.textContent = '';
-                document.getElementById('lastName').style.borderColor = "lightblue";
+                lastNameMsg = '';
+                lastNameClassStyle = "validStyle";
             }
         }
+        this.setState({errors: {
+                emailErrMsg:emailMsg,
+                passwordErrMsg:passwordMsg,
+                userNameErrMsg:userNameMsg,
+                firstNameErrMsg: firstNameMsg,
+                lastNameErrMsg: lastNameMsg,
+                confirmPasswordErrMsg: confirmPasswordMsg
+            },
+            errClass : {
+                firstNameClassStyle : firstNameClassStyle,
+                lastNameClassStyle : lastNameClassStyle,
+                userNameClassStyle : userNameClassStyle,
+                passwordClassStyle : passwordClassStyle,
+                confirmClassStyle : confirmClassStyle,
+                emailClassStyle : emailClassStyle
+            }
+        });
     }
 
     handleSubmit(event) {
@@ -113,43 +152,46 @@ class Main extends Component{
                 <div className="body-form">
                     <h3>Register</h3>
                     <section>
-                        <p>Join the community and improve your game with <strong>Angular</strong> </p>
+                        <article>Join the community and improve your game with <strong>Angular</strong> </article>
                     </section> 
                     <form onSubmit={this.handleSubmit.bind(this)}>
                         <span>
-                            <input type="text" onChange={this.handleChange} value={this.state.firstName} id="firstName" ref="firstName" name="firstName" placeholder="First Name" />
+                            <input type="text" className = {this.state.errClass.firstNameClassStyle} onChange={this.handleChange} value={this.state.firstName} id="firstName" ref="firstName" name="firstName" placeholder="First Name" />
                             <i id="icon" className="fa fa-user"></i>
                         </span>
                         <span>
-                            <input type="text" onChange={this.handleChange} value={this.state.lastName} id="lastName" ref="lastName" name="lastName"  placeholder="Last Name" />
+                            <input type="text" className = {this.state.errClass.lastNameClassStyle} onChange={this.handleChange} value={this.state.lastName} id="lastName" ref="lastName" name="lastName"  placeholder="Last Name" />
                             <i id="icon" className="fa fa-user"></i>
                         </span>
                         <span>    
-                            <input type="email" onChange={this.handleChange} value={this.state.email} id="email" ref="email" name="email"  placeholder="Email" />
+                            <input type="email" className = {this.state.errClass.emailClassStyle} onChange={this.handleChange} value={this.state.email} id="email" ref="email" name="email"  placeholder="Email" />
                             <i id="icon" className="fa fa-envelope-o"></i>
                         </span>
                         <span>
-                            <input type="text" onChange={this.handleChange} value={this.state.userName} id="userName" ref="userName" name="userName"  placeholder="Username" />
+                            <input type="text" className = {this.state.errClass.userNameClassStyle} onChange={this.handleChange} value={this.state.userName} id="userName" ref="userName" name="userName"  placeholder="Username" />
                             <i id="icon" className="fa fa-user"></i>
                         </span>
                         <span>
-                            <input type="password" onChange={this.handleChange} value={this.state.password} id="password" ref="password"  name="password"  placeholder="Password" />
+                            <input type="password" className = {this.state.errClass.passwordClassStyle} onChange={this.handleChange} value={this.state.password} id="password" ref="password"  name="password"  placeholder="Password" />
                             <i id="icon" className="fa fa-unlock-alt"></i>
                         </span>
                         <span>
-                            <input type="password" onChange={this.handleChange} value={this.state.confirmPassword} id="confirmPassword" ref="confirmPassword" name="confirmPassword" placeholder="Confirm Password" />
+                            <input type="password" className = {this.state.errClass.confirmClassStyle} onChange={this.handleChange} value={this.state.confirmPassword} id="confirmPassword" ref="confirmPassword" name="confirmPassword" placeholder="Confirm Password" />
                             <i id="icon" className="fa fa-lock"></i>
                         </span>
                         <span>
                             <p className="body-div-signin">By registering you agree to our <strong>Terms</strong> and <strong>Privacy Policy</strong></p>
                         </span>
                         <div className="errorMsg">
-                            <div className="error" id="firstNameError"></div>
-                            <div className="error" id="lastNameError"></div>
-                            <div className="error" id="userNameError"></div>
-                            <div className="error" id="emailError"></div>
-                            <div className="error" id="passwordError"></div>
-                            <div className="error" id="confirmPasswordError"></div> 
+                            {Object.keys(this.state.errors).map((key,value)=>{
+                                if(this.state.errors[key].length) {
+                                    return (
+                                        <div className="error" key={key}>
+                                        {this.state.errors[key]}
+                                        </div>
+                                    )
+                                }
+                            })}
                         </div>
                         <span>
                             <button disabled={this.state.invalidData} type="submit" value="Register" className="button">Register</button>
