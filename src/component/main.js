@@ -19,12 +19,12 @@ class Main extends Component{
                 confirmPasswordErrMsg: ""
             },
             errClass :{
-                emailClassStyle : "",
-                passwordClassStyle : "",
-                confirmClassStyle : "",
                 firstNameClassStyle : "",
                 lastNameClassStyle : "",
-                userNameClassStyle : ""
+                emailClassStyle : "",
+                userNameClassStyle : "",
+                passwordClassStyle : "",
+                confirmClassStyle : ""    
             },
             invalidData: true
         };
@@ -123,11 +123,11 @@ class Main extends Component{
             }
         }
         this.setState({errors: {
-                emailErrMsg:emailMsg,
-                passwordErrMsg:passwordMsg,
-                userNameErrMsg:userNameMsg,
                 firstNameErrMsg: firstNameMsg,
                 lastNameErrMsg: lastNameMsg,
+                emailErrMsg:emailMsg,
+                userNameErrMsg:userNameMsg,
+                passwordErrMsg:passwordMsg,
                 confirmPasswordErrMsg: confirmPasswordMsg
             },
             errClass : {
