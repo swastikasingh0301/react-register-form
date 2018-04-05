@@ -11,11 +11,11 @@ class Main extends Component{
             password: '',
             confirmPassword: '',
             errors: {
-                emailErrMsg: " ",
-                passwordErrMsg: "",
-                userNameErrMsg: "",
                 firstNameErrMsg: "",
                 lastNameErrMsg: "",
+                emailErrMsg: " ",
+                userNameErrMsg: "",
+                passwordErrMsg: "", 
                 confirmPasswordErrMsg: ""
             },
             errClass :{
